@@ -1,0 +1,33 @@
+---
+// navbar linkies
+const links: { href: string; title: string }[] = [
+  { href: "/blog", title: "blog" },
+  { href: "/projects", title: "projects" },
+  { href: "/socials", title: "socials" },
+  { href: "https://github.com/dragsbruh", title: "github" },
+];
+---
+
+<div
+  class="flex flex-col gap-4 md:flex-row justify-between px-8 py-4 select-none"
+>
+  <a
+    href="/"
+    class="rounded-2xl hover:bg-accent hover:text-surface hover:underline p-2 text-2xl text-accent hover:scale-105 transition-all"
+    >furina</a
+  >
+
+  <div class="flex gap-4">
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          target={link.href.startsWith("http") ? "_blank" : "_self"}
+          class="rounded-xl text-xl hover:bg-accent hover:text-surface px-4 py-2 hover:underline hover:scale-105 transition-all"
+        >
+          {link.title}
+        </a>
+      ))
+    }
+  </div>
+</div>

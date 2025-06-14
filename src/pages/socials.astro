@@ -1,0 +1,77 @@
+---
+import { discordServer } from "../stores/discord.svelte";
+import Layout from "../layouts/Layout.astro";
+import github from "../assets/github.svg";
+import reddit from "../assets/reddit.svg";
+import instagram from "../assets/instagram.svg";
+import web from "../assets/web.svg";
+import discord from "../assets/discord.svg";
+import bluesky from "../assets/bluesky.svg";
+
+const talkers = [
+  {
+    name: "BasedHQ",
+    handle: "furina",
+    url: "https://based.is-a.dev",
+    icon: web,
+  },
+  {
+    name: "GitHub",
+    handle: "dragsbruh",
+    url: "https://github.com/dragsbruh",
+    icon: github,
+  },
+  {
+    name: "Bluesky",
+    handle: "based.is-a.dev",
+    url: "https://bsky.app/profile/based.is-a.dev",
+    icon: bluesky,
+  },
+  {
+    name: "Discord",
+    handle: discordServer.split("/").at(-1),
+    url: discordServer,
+    icon: discord,
+  },
+  {
+    name: "Instagram",
+    handle: "dragsbruh",
+    url: "https://instagram.com/dragsbruh",
+    icon: instagram,
+  },
+  {
+    name: "Reddit",
+    handle: "LegenDrags",
+    url: "https://reddit.com/user/LegenDrags",
+    icon: reddit,
+  },
+];
+---
+
+<Layout>
+  <div class="flex flex-col gap-8">
+    <h1 class="text-2xl font-semibold text-typo mb-4">Socials</h1>
+
+    <div class="flex flex-col gap-4 w-1/3">
+      {
+        talkers.map((talker) => (
+          <a
+            href={talker.url}
+            target="_blank"
+            class="group rounded-xl px-4 flex justify-between items-center py-2 hover:bg-accent hover:scale-105 hover:text-surface transition-all"
+          >
+            {/* wtf html this is ass, why is there a whitespace after `/` if theres a newline */}
+            <h2 class="text-xl gap-0 flex">
+              {talker.name}/
+              <span class="text-typo-muted group-hover:text-surface">
+                {talker.handle}
+              </span>
+            </h2>
+
+            <talker.icon class="w-8 group-hover:scale-90" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://furina.is-a.dev/sitemap-index.xml

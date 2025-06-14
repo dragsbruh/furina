@@ -1,0 +1,10 @@
+---
+import PostList from "../components/PostList.astro";
+---
+
+<PostList
+  filter={(blog) => blog.tags.includes("project")}
+  title="Projects I Did :3"
+  description="These are some projects i did (aka has the project tag) >w<"
+  placeholder="Search projects >~<"
+/>

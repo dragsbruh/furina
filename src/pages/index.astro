@@ -1,16 +1,38 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Profile from "../components/Profile.svelte";
+import Qt from "../components/Qt.svelte";
+import About from "../content/About.mdx";
+import { SEO } from "astro-seo";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<head>
+  <SEO
+    title="hai :3 i'm furina (dragsbruh)"
+    description="i code and stuff and probably write stuff, heres some keywords for google, code, dev, programming, github."
+    openGraph={{
+      basic: {
+        title: "hai :3 ping me im furina (@dragsbruh)",
+        type: "profile",
+        image: `${Astro.site}/avatar.jpg`,
+      },
+    }}
+  />
+</head>
+
+<Layout>
+  <div class="flex-grow flex h-full">
+    <div class="flex-grow">
+      <div class="prose prose-invert">
+        <About />
+      </div>
+    </div>
+    <div class="flex-col justify-between hidden md:flex">
+      <Profile client:idle />
+      <div class="flex flex-row-reverse">
+        <Qt client:idle />
+      </div>
+    </div>
+  </div>
+  <div class="py-8"></div>
+</Layout>

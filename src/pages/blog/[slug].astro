@@ -1,0 +1,92 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { render } from "astro:content";
+import { Image } from "astro:assets";
+import { SEO } from "astro-seo";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { id: post.id, slug: post.data.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const seo = {
+  title: `${post.data.title} - furina`,
+  desc: post.data.description ?? "no description available",
+};
+---
+
+<head>
+  <SEO
+    title={seo.title}
+    description={seo.desc}
+    openGraph={{
+      basic: {
+        title: seo.title,
+        type: "profile",
+        image: post.data.hero
+          ? `${Astro.site!.href}/${post.data.hero.src}`
+          : `${Astro.site!.href}/avatar.jpg`,
+      },
+      optional: {
+        description: seo.desc,
+        siteName: "furina",
+      },
+    }}
+  />
+</head>
+
+<Layout>
+  <div class="flex flex-col gap-4">
+    <a
+      href="/blog/"
+      class="rounded-2xl px-4 py-2 w-max text-typo hover:bg-typo hover:text-surface border border-lines hover:scale-105 transition-all inline-block duration-200"
+      >&lt;- back</a
+    >
+    {
+      post.data.hero ? (
+        <Image
+          src={post.data.hero}
+          alt=""
+          class={`w-full rounded-4xl max-h-128 object-cover ${post.data.hero_position ?? ""}`}
+        />
+      ) : (
+        ""
+      )
+    }
+
+    <div class="pb-4 border-b border-lines">
+      <h1 class="text-4xl font-bold leading-relaxed">{post.data.title}</h1>
+      <h3 class="text-sm leading-relaxed">
+        Published on {
+          post.data.date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }
+      </h3>
+
+      <div class="flex gap-4 mt-4">
+        {
+          post.data.tags.map((tag) => (
+            <div class="rounded-2xl px-4 py-2 border border-lines hover:bg-typo hover:text-surface hover:scale-105 transition-all cursor-pointer">
+              <p>{tag}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="prose prose-invert max-w-none">
+      <Content />
+    </div>
+    <div class="py-8"></div>
+  </div>
+</Layout>

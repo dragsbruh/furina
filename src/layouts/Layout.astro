@@ -1,0 +1,26 @@
+---
+import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="shortcut icon" href="/avatar.jpg" type="image/jpeg">
+    <title>furina de fontaine!!1!</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <div class="w-full h-full flex justify-center">
+      <div class="w-full xl:w-3/4 max-w-[1080px] flex flex-col">
+        <Navbar />
+        <div class="px-10">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

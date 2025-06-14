@@ -1,0 +1,30 @@
+@content "./src/**/*.{html,js,ts,svelte,astro,md,mdx}";
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "iAWriterQuattro";
+  src: url("/iAWriterQuattroV.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+  --color-surface: #0b0f1a; /* main background: deep abyssal blue */
+  --color-surface-alt: #111827; /* alt background: dark, with hint of depth */
+
+  --color-typo: #dbeafe; /* primary text: soft airy blue */
+  --color-typo-muted: #7aa2f7; /* muted: washed periwinkle */
+  --color-lines: #1e293b; /* borders/dividers: slate-ish blue */
+
+  --color-accent: #89b4fa; /* accent: pastel ocean blue */
+  --color-accent-alt: #74c7ec; /* alt accent: Fontaine sparkle */
+
+  --font-writer: "iAWriterQuattro", sans-serif;
+}
+
+html,
+body {
+  @apply w-full h-full bg-surface text-typo font-writer;
+}
