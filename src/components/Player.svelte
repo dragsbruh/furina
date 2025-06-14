@@ -13,16 +13,16 @@
 
   onMount(() => {
     const update = () => {
+      duration = audioElement.duration;
       if (!isSeeking) currentTime = audioElement.currentTime;
     };
 
     audioElement.addEventListener("timeupdate", update);
-    audioElement.addEventListener("loadedmetadata", () => {
-      duration = audioElement.duration;
-    });
+    audioElement.addEventListener("loadedmetadata", update);
 
     return () => {
       audioElement.removeEventListener("timeupdate", update);
+      audioElement.removeEventListener("loadedmetadata", update);
     };
   });
 
