@@ -9,7 +9,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://furina.is-a.dev",
+  site: process.env.SITE_URL ?? "https://furina.is-a.dev",
   vite: {
     plugins: [tailwindcss()],
   },
