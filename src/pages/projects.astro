@@ -1,10 +1,28 @@
 ---
+import { SEO } from "astro-seo";
 import PostList from "../components/PostList.astro";
 ---
 
 <PostList
   filter={(blog) => blog.tags.includes("project")}
-  title="Projects I Did :3"
-  description="These are some projects i did (aka has the project tag) >w<"
-  placeholder="Search projects >~<"
+  title="projects I did :3"
+  description="these are some projects i did (aka has the project tag) >w<"
+  placeholder="search projects >~<"
 />
+
+<head>
+  <SEO
+    title="furina's projects"
+    description="i did some projects here they are!"
+    openGraph={{
+      basic: {
+        title: "furina's projects",
+        type: "profile",
+        image: `${Astro.site!.href}/avatar.jpg`,
+      },
+      optional: {
+        siteName: "furina",
+      },
+    }}
+  />
+</head>

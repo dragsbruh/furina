@@ -1,9 +1,28 @@
 ---
+import { SEO } from "astro-seo";
 import PostList from "../../components/PostList.astro";
 ---
 
+<head>
+  <SEO
+    charset="utf-8"
+    title="furina's blog"
+    description="i write stuff sometimes you can read them here >w<"
+    openGraph={{
+      basic: {
+        title: "furina's blog",
+        type: "profile",
+        image: `${Astro.site!.href}/avatar.jpg`,
+      },
+      optional: {
+        siteName: "furina",
+      },
+    }}
+  />
+</head>
+
 <PostList
-  placeholder="Search blog posts... >~<"
-  title="Stuff I Wrote :3"
-  description="I write stuff sometimes you can read them here >w<"
+  placeholder="search blog posts... >~<"
+  title="stuff I wrote :3"
+  description="i write stuff sometimes you can read them here >w<"
 />

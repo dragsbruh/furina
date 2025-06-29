@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import qts from "../assets/qts.json";
+  import qts from "../../assets/qts.json";
 
   let qt = $state("");
   onMount(() => (qt = qts[Math.floor(Math.random() * qts.length)]));

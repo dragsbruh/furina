@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import coverArt from "../assets/la_vaguelette.jpg";
-  import music from "../assets/la_vaguelette.ogg";
+  import coverArt from "../assets/music/covers/la_vaguelette.jpg";
+  import music from "../assets/music/la_vaguelette.ogg";
   import PlayPause from "./mini/PlayPause.svelte";
 
   let audioElement: HTMLAudioElement;

@@ -1,13 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Profile from "../components/Profile.svelte";
-import Qt from "../components/Qt.svelte";
+import Qt from "../components/fun/Qt.svelte";
 import About from "../content/About.mdx";
 import { SEO } from "astro-seo";
 ---
 
 <head>
   <SEO
+    charset="utf-8"
     title="hai :3 i'm furina (dragsbruh)"
     description="i code and stuff and probably write stuff, heres some keywords for google, code, dev, programming, github."
     openGraph={{
@@ -21,7 +22,7 @@ import { SEO } from "astro-seo";
 </head>
 
 <Layout>
-  <div class="flex-grow flex h-full">
+  <div class="flex-grow flex h-full gap-2">
     <div class="flex-grow">
       <div class="prose prose-invert">
         <About />
