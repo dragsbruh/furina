@@ -74,14 +74,14 @@
 </script>
 
 {#if currentPresence}
-  <div class="border border-lines bg-surface-alt h-max rounded-xl">
+  <div class="border border-lines bg-surface-alt h-max rounded-xl hover:scale-105 transition-all">
     <div class="relative w-full h-30">
       <div
         class="w-full h-20 bg-surface border-lines border-b rounded-t-xl"
       ></div>
       <div class="absolute bottom-0 left-0">
         <div
-          class="ml-4 relative w-24 aspect-square flex justify-center items-center"
+          class="ml-4 relative w-24 aspect-square flex justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img
             src={currentPresence.data.discord_user.avatar}
@@ -185,7 +185,7 @@
       <div class="flex flex-col gap-2">
         {#each currentPresence.data.activities as activity}
           {#if activity.type != 4}
-            <div class="flex flex-col gap-2 bg-surface rounded-xl p-4">
+            <div class="flex flex-col gap-2 bg-surface rounded-xl p-4 hover:scale-[102%] transition-transform">
               <p class="text-xs text-muted font-bold">
                 {getActivityVerb(activity.type)}
               </p>
@@ -194,7 +194,7 @@
                   ? 'mb-1'
                   : ''}"
               >
-                <div class="relative">
+                <div class="relative hover:scale-105 transition-transform">
                   {#if activity.assets}
                     {#if activity.assets.large_image_url}
                       <img
