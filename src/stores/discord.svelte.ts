@@ -105,11 +105,7 @@ export const lanyardSchema = z.object({
                 large_image_url:
                   (o.application_id || o.id.startsWith("spotify")) &&
                   o.assets?.large_image
-                    ? o.assets.large_image.startsWith("spotify:")
-                      ? `https://i.scdn.co/image/${
-                          o.assets.large_image.split(":")[1]
-                        }`
-                      : `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.large_image}.png?size=512`
+                    ? parseDiscordImage(o.assets.large_image, o)
                     : undefined,
                 small_image_url:
                   o.application_id && o.assets?.small_image
@@ -195,3 +191,20 @@ export const updatePresence = async () => {
 
   presence.set(result.data);
 };
+
+function parseDiscordImage(url: string, o: any) {
+  if (url.startsWith("spotify:")) {
+    return `https://i.scdn.co/image/${url.split(":")[1]}`;
+  } else if (url.startsWith("mp:external")) {
+    const parts = url.split("/");
+    if (parts.length < 5) return null;
+
+    const protocol = parts[2];
+    const host = parts[3];
+    const path = parts.slice(4).join("/");
+
+    return `${protocol}://${host}/${path}`;
+  }
+
+  return `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.large_image}.png?size=512`;
+}
