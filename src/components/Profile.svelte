@@ -1,7 +1,6 @@
 <script lang="ts">
   import {
     badges,
-    bio,
     discordServer,
     getActivityVerb,
     getStatusColor,
@@ -14,59 +13,8 @@
   import { onMount } from "svelte";
 
   let currentPresence: DiscordPresence | null = $state(null);
-  let bioTruncated = $state(true);
 
   presence.subscribe((p) => (currentPresence = p));
-
-  function truncateHTML(html: string, limit: number): string {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const body = doc.body;
-
-    let count = 0;
-
-    function truncateTextNodes(node: Node) {
-      if (count >= limit) {
-        node.parentNode?.removeChild(node);
-        return;
-      }
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent ?? "";
-        const remaining = limit - count;
-
-        if (text.length > remaining) {
-          node.textContent = text.slice(0, remaining);
-          count = limit;
-        } else {
-          count += text.length;
-        }
-      }
-
-      for (const child of Array.from(node.childNodes)) {
-        truncateTextNodes(child);
-      }
-    }
-
-    function removeEmptyElements(node: Element) {
-      for (const child of Array.from(node.children)) {
-        removeEmptyElements(child);
-      }
-
-      const isEmpty =
-        node.textContent?.trim().length === 0 &&
-        !node.querySelector("img, video, iframe");
-
-      if (isEmpty) {
-        node.remove();
-      }
-    }
-
-    truncateTextNodes(body);
-    removeEmptyElements(body);
-
-    return body.innerHTML;
-  }
 
   onMount(() => {
     updatePresence().then(() => setInterval(updatePresence, 1000 * 10));
@@ -74,7 +22,9 @@
 </script>
 
 {#if currentPresence}
-  <div class="border border-lines bg-surface-alt h-max rounded-xl hover:scale-105 transition-all">
+  <div
+    class="border border-lines bg-surface-alt h-max rounded-xl hover:scale-105 transition-all"
+  >
     <div class="relative w-full h-30">
       <div
         class="w-full h-20 bg-surface border-lines border-b rounded-t-xl"
@@ -169,23 +119,35 @@
       </div>
 
       <div class="py-2 mt-2">
-        <div class="text-[13px]">
-          {#if bioTruncated}
-            {@html truncateHTML(bio, 41)}
-            <button
-              class="text-[#888] hover:underline hover:text-muted hover:cursor-pointer w-max"
-              onclick={() => (bioTruncated = false)}>View Full Bio</button
+        <div class="text-[13px] leading-8">
+          <blockquote class="border-l border-dim pl-4">
+            <p>No one gets hurt, I'm the only loser</p>
+            <i>- Shazali Sulaiman</i>
+          </blockquote>
+
+          <a
+            href="https://furina.is-a.dev"
+            class="text-accent hover:border-accent border-b border-transparent border-dashed w-max"
+            >https://furina.is-a.dev</a
+          >
+          <p>
+            homelab:
+            <a
+              href="https://miku.is-a.dev"
+              class="text-accent hover:border-accent border-b border-transparent border-dashed w-max"
+              >https://miku.is-a.dev</a
             >
-          {:else}
-            {@html bio}
-          {/if}
+          </p>
+          <p>i use arch, btw 󠅦󠺩​󠆂󠍔​󠿏󠬄󠴀󠱃󠁑</p>
         </div>
       </div>
 
       <div class="flex flex-col gap-2">
         {#each currentPresence.data.activities as activity}
           {#if activity.type != 4}
-            <div class="flex flex-col gap-2 bg-surface rounded-xl p-4 hover:scale-[102%] transition-transform">
+            <div
+              class="flex flex-col gap-2 bg-surface rounded-xl p-4 hover:scale-[102%] transition-transform"
+            >
               <p class="text-xs text-muted font-bold">
                 {getActivityVerb(activity.type)}
               </p>
@@ -225,11 +187,11 @@
                   {/if}
                 </div>
                 <div class="flex flex-col gap-1">
-                  <h2 class="text-sm">{activity.name}</h2>
-                  <h3 class="text-xs leading-none text-muted">
+                  <h2 class="text-sm truncate w-48">{activity.name}</h2>
+                  <h3 class="text-xs leading-none text-muted truncate w-48">
                     {activity.details}
                   </h3>
-                  <h4 class="text-xs leading-none text-muted">
+                  <h4 class="text-xs leading-none text-muted truncate w-48">
                     {activity.state}
                   </h4>
                   {#if activity.timestamps?.start}

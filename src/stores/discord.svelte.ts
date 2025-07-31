@@ -4,9 +4,6 @@ import { z } from "zod";
 export const user_id = "781445370177126401";
 export const pronouns = "regina/of/all/waters";
 export const discordServer = "https://discord.gg/BK9sBWdWC4";
-export const bio = `<p>maybe it was always meant to be this way</p><br>
-<a href="#" class="text-link hover:underline">https://based.nya.pub/</a><br><br>
-<p>i use arch, btw</p>`;
 
 export const badges = $state([
   {
@@ -72,49 +69,51 @@ export const lanyardSchema = z.object({
               BigInt(u.id) % 5n
             )}.png`,
       })),
-    activities: z.array(
-      z
-        .object({
-          id: z.string(),
-          name: z.string(),
-          type: z.number(),
-          state: z.string().optional(),
-          session_id: z.string().optional(),
-          details: z.string().optional(),
-          created_at: z.coerce.date().optional(),
-          timestamps: z
-            .object({
-              start: z.coerce.date().optional(),
-            })
-            .optional(),
-          assets: z
-            .object({
-              large_image: z.string().optional(),
-              large_text: z.string().optional(),
-              small_image: z.string().optional(),
-              small_text: z.string().optional(),
-            })
-            .optional(),
-          application_id: z.string().optional(),
-        })
-        .transform((o) => ({
-          ...o,
-          assets: o.assets
-            ? {
-                ...o.assets,
-                large_image_url:
-                  (o.application_id || o.id.startsWith("spotify")) &&
-                  o.assets?.large_image
-                    ? parseDiscordImage(o.assets.large_image, o)
-                    : undefined,
-                small_image_url:
-                  o.application_id && o.assets?.small_image
-                    ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
-                    : undefined,
-              }
-            : undefined,
-        }))
-    ),
+    activities: z
+      .array(
+        z
+          .object({
+            id: z.string(),
+            name: z.string(),
+            type: z.number(),
+            state: z.string().optional(),
+            session_id: z.string().optional(),
+            details: z.string().optional(),
+            created_at: z.coerce.date().optional(),
+            timestamps: z
+              .object({
+                start: z.coerce.date().optional(),
+              })
+              .optional(),
+            assets: z
+              .object({
+                large_image: z.string().optional(),
+                large_text: z.string().optional(),
+                small_image: z.string().optional(),
+                small_text: z.string().optional(),
+              })
+              .optional(),
+            application_id: z.string().optional(),
+          })
+          .transform((o) => ({
+            ...o,
+            assets: o.assets
+              ? {
+                  ...o.assets,
+                  large_image_url:
+                    (o.application_id || o.id.startsWith("spotify")) &&
+                    o.assets?.large_image
+                      ? parseDiscordImage(o.assets.large_image, o)
+                      : undefined,
+                  small_image_url:
+                    o.application_id && o.assets?.small_image
+                      ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
+                      : undefined,
+                }
+              : undefined,
+          }))
+      )
+      .transform((a) => a.filter((v) => v.name !== "music")), // filter out mpd-discord-rpc
     discord_status: z.enum(["dnd", "offline", "online", "idle"]),
     listening_to_spotify: z.boolean(),
 
@@ -133,6 +132,15 @@ export const lanyardSchema = z.object({
   }),
 });
 export type DiscordPresence = z.infer<typeof lanyardSchema>;
+
+export const lastfmSchema = z.object({
+  track: z.string(),
+  artist: z.string(),
+  album: z.string(),
+  cover: z.string(),
+  trackUrl: z.string(),
+  nowPlaying: z.boolean(),
+});
 
 export const presence: PreinitializedWritableAtom<DiscordPresence | null> =
   atom(null);
@@ -172,22 +180,53 @@ export const getActivityVerb = (type: number) => {
 };
 
 export const updatePresence = async () => {
-  const response = await fetch(`https://api.lanyard.rest/v1/users/${user_id}`);
-  if (!response.ok) {
+  const [lanyardRes, lastfmRes] = await Promise.all([
+    fetch(`https://api.lanyard.rest/v1/users/${user_id}`),
+    fetch("https://lastfmworker.dragsbruh.workers.dev"),
+  ]);
+  if (!lanyardRes.ok) {
     console.error(
       "http status error while fetching presence from lanyard",
-      response.headers.get("Content-Type") === "application/json"
-        ? response.json()
-        : response.text()
+      lanyardRes.headers.get("Content-Type") === "application/json"
+        ? lanyardRes.json()
+        : lanyardRes.text()
+    );
+    return;
+  }
+  if (!lastfmRes.ok) {
+    console.error(
+      "http status error while fetching lastfm data",
+      lastfmRes.status,
+      lastfmRes.statusText
     );
     return;
   }
 
-  const result = await lanyardSchema.safeParseAsync(await response.json());
+  const result = await lanyardSchema.safeParseAsync(await lanyardRes.json());
   if (!result.success) {
     console.error("schema error while parsing presence", result.error);
     return;
   }
+  const lastfm = await lastfmSchema.safeParseAsync(await lastfmRes.json());
+  if (!lastfm.success) {
+    console.error("schema error while parsing lastfm", result.error);
+    return;
+  }
+
+  result.data.data.activities = [
+    {
+      name: lastfm.data.track,
+      details: `${lastfm.data.artist} / ${lastfm.data.album}`,
+      state: lastfm.data.nowPlaying ? "Now listening" : "Last listened to",
+      type: 2,
+      assets: {
+        large_image_url: lastfm.data.cover,
+        small_image_url: undefined,
+      },
+      id: "lastfm",
+    },
+    ...result.data.data.activities,
+  ];
 
   presence.set(result.data);
 };

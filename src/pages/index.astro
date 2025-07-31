@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Profile from "../components/Profile.svelte";
-import LastFM from "../components/LastFM.svelte";
 import Qt from "../components/fun/Qt.svelte";
 import About from "../content/About.mdx";
 import { SEO } from "astro-seo";
@@ -31,7 +30,6 @@ import { SEO } from "astro-seo";
     </div>
     <div class="flex-col gap-4 hidden flex-1/3 md:flex">
       <Profile client:idle />
-      <LastFM client:idle />
     </div>
   </div>
   <div class="py-8"></div>
