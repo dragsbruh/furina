@@ -137,7 +137,7 @@ export const lastfmSchema = z.object({
   track: z.string(),
   artist: z.string(),
   album: z.string(),
-  cover: z.string(),
+  cover: z.string().nullable(),
   trackUrl: z.string(),
   nowPlaying: z.boolean(),
 });
@@ -220,7 +220,7 @@ export const updatePresence = async () => {
       state: lastfm.data.nowPlaying ? "Now listening" : "Last listened to",
       type: 2,
       assets: {
-        large_image_url: lastfm.data.cover,
+        large_image_url: lastfm.data.cover ?? undefined,
         small_image_url: undefined,
       },
       id: "lastfm",
