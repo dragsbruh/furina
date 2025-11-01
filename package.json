@@ -9,11 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.0",
-    "@astrojs/sitemap": "^3.4.1",
-    "@astrojs/svelte": "^7.1.0",
+    "@astrojs/mdx": "4.3.9",
+    "@astrojs/sitemap": "3.6.0",
+    "@astrojs/svelte": "7.2.1",
     "@tailwindcss/vite": "^4.1.10",
-    "astro": "^5.9.3",
+    "astro": "5.15.3",
     "astro-seo": "^0.8.4",
     "fuse.js": "^7.1.0",
     "music-metadata-browser": "^2.5.11",
