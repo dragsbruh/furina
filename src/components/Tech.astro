@@ -1,5 +1,7 @@
 ---
 import typescript from "../assets/tech/typescript.svg";
+import archlinux from "../assets/tech/archlinux.svg";
+import forgejo from "../assets/tech/forgejo.svg";
 import svelte from "../assets/tech/svelte.svg";
 import docker from "../assets/tech/docker.svg";
 import bun from "../assets/tech/bun.svg";
@@ -9,30 +11,47 @@ import go from "../assets/tech/go.svg";
 const tech: {
   name: string;
   icon: typeof docker;
+  url: string;
 }[] = [
+  {
+    name: "arch linux (btw)",
+    icon: archlinux,
+    url: "https://archlinux.org",
+  },
   {
     name: "zig",
     icon: zig,
+    url: "https://ziglang.org",
   },
   {
     name: "golang",
     icon: go,
+    url: "https://go.dev",
   },
   {
     name: "typescript",
     icon: typescript,
+    url: "https://www.typescriptlang.org",
   },
   {
     name: "svelte",
     icon: svelte,
-  },
-  {
-    name: "docker",
-    icon: docker,
+    url: "https://svelte.dev",
   },
   {
     name: "bun",
     icon: bun,
+    url: "https://bun.sh",
+  },
+  {
+    name: "docker",
+    icon: docker,
+    url: "https://docker.com",
+  },
+  {
+    name: "forgejo",
+    icon: forgejo,
+    url: "https://forgejo.org/",
   },
 ];
 ---
@@ -40,10 +59,14 @@ const tech: {
 <div class="flex gap-4 flex-wrap not-prose">
   {
     tech.map((tech) => (
-      <div class="flex items-center gap-2 p-4 bg-surface-alt rounded-2xl border border-lines hover:scale-105 hover:bg-surface transition-all cursor-pointer duration-100">
+      <a
+        href={tech.url}
+        target="_blank"
+        class="flex items-center gap-2 p-4 bg-surface-alt rounded-2xl border border-lines hover:scale-105 hover:bg-surface transition-all cursor-pointer duration-100"
+      >
         <tech.icon class="w-8 h-8" />
         <p class="text-lg">{tech.name}</p>
-      </div>
+      </a>
     ))
   }
 </div>

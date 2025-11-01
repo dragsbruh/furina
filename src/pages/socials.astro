@@ -6,7 +6,6 @@ import reddit from "../assets/socials/reddit.svg";
 import instagram from "../assets/socials/instagram.svg";
 import discord from "../assets/socials/discord.svg";
 import bluesky from "../assets/socials/bluesky.svg";
-import postmiku from "../assets/socials/postmiku.png";
 import lastfm from "../assets/socials/lastfm.svg";
 import proton from "../assets/socials/proton.svg";
 import { SEO } from "astro-seo";
@@ -15,14 +14,8 @@ const talkers: {
   name: string;
   handle: string;
   url: string;
-  icon: typeof github | typeof postmiku;
+  icon: typeof github;
 }[] = [
-  {
-    name: "PostMiku Labs",
-    handle: "",
-    url: "https://git.vinster.xyz/postmiku",
-    icon: postmiku,
-  },
   {
     name: "GitHub",
     handle: "dragsbruh",
@@ -101,15 +94,7 @@ const talkers: {
             target="_blank"
             class="group rounded-xl px-4 flex gap-8 items-center py-2 hover:bg-accent hover:scale-[103%] hover:text-surface transition-all"
           >
-            {typeof talker.icon === "function" ? (
-              <talker.icon class="w-8 group-hover:scale-90" />
-            ) : (
-              <img
-                src={talker.icon.src}
-                class="w-8 group-hover:scale-90 rounded-full"
-              />
-            )}
-
+            <talker.icon class="w-8 group-hover:scale-90" />
             <h2 class="text-xl gap-0 flex flex-grow justify-between">
               {talker.name}
               <span class="text-typo-muted group-hover:text-surface">

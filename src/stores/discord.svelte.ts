@@ -34,7 +34,7 @@ export const lanyardSchema = z.object({
         username: z.string(),
         avatar: z.string().nullable(),
 
-        clan: z
+        primary_guild: z
           .object({
             tag: z.string(),
             identity_guild_id: z.string(),
@@ -62,12 +62,11 @@ export const lanyardSchema = z.object({
       .transform((u) => ({
         ...u,
         avatar: u.avatar
-          ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${
-              u.avatar.startsWith("a_") ? "gif" : "png"
-            }?size=1024`
+          ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${u.avatar.startsWith("a_") ? "gif" : "png"
+          }?size=1024`
           : `https://cdn.discordapp.com/embed/avatars/${Number(
-              BigInt(u.id) % 5n
-            )}.png`,
+            BigInt(u.id) % 5n
+          )}.png`,
       })),
     activities: z
       .array(
@@ -99,17 +98,17 @@ export const lanyardSchema = z.object({
             ...o,
             assets: o.assets
               ? {
-                  ...o.assets,
-                  large_image_url:
-                    (o.application_id || o.id.startsWith("spotify")) &&
+                ...o.assets,
+                large_image_url:
+                  (o.application_id || o.id.startsWith("spotify")) &&
                     o.assets?.large_image
-                      ? parseDiscordImage(o.assets.large_image, o)
-                      : undefined,
-                  small_image_url:
-                    o.application_id && o.assets?.small_image
-                      ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
-                      : undefined,
-                }
+                    ? parseDiscordImage(o.assets.large_image, o)
+                    : undefined,
+                small_image_url:
+                  o.application_id && o.assets?.small_image
+                    ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
+                    : undefined,
+              }
               : undefined,
           }))
       )

@@ -51,12 +51,12 @@
           <div class="relative flex size-2">
             <span
               class="absolute inline-flex h-full w-full animate-ping {getStatusColor(
-                currentPresence.data.discord_status
+                currentPresence.data.discord_status,
               )} opacity-75"
             ></span>
             <span
               class="relative inline-flex h-full w-full {getStatusColor(
-                currentPresence.data.discord_status
+                currentPresence.data.discord_status,
               )}"
             ></span>
           </div>
@@ -81,17 +81,17 @@
         </div>
 
         <div class="flex gap-1 select-none">
-          {#if currentPresence.data.discord_user.clan}
+          {#if currentPresence.data.discord_user.primary_guild}
             <div
               class="flex gap-1 items-center bg-surface-alt-extra w-max px-1 py-1/2"
             >
               <img
-                src={currentPresence.data.discord_user.clan.image}
+                src={currentPresence.data.discord_user.primary_guild.image}
                 alt=""
                 class="h-2"
               />
               <p class=" text-xs font-bold text-muted">
-                {currentPresence.data.discord_user.clan.tag}
+                {currentPresence.data.discord_user.primary_guild.tag}
               </p>
             </div>
           {/if}
@@ -121,8 +121,8 @@
       <div class="py-2 mt-2">
         <div class="text-[13px] leading-8">
           <blockquote class="border-l border-dim pl-4">
-            <p>No one gets hurt, I'm the only loser</p>
-            <i>- Shazali Sulaiman</i>
+            <p>"I must say also a few words. Leave me; I am inexorable."</p>
+            <i>- Grall, Frankenstein</i>
           </blockquote>
 
           <a
