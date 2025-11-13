@@ -144,7 +144,7 @@
 
       <div class="flex flex-col gap-2">
         {#each currentPresence.data.activities as activity}
-          {#if activity.type != 4}
+        {#if activity.type != 4}
             <div
               class="flex flex-col gap-2 bg-surface rounded-xl p-4 hover:scale-[102%] transition-transform"
             >
