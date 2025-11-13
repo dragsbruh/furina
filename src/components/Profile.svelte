@@ -12,16 +12,32 @@
   import Timesince from "./mini/Timesince.svelte";
   import { onMount } from "svelte";
 
-  let currentPresence: DiscordPresence | null = $state(null);
+  const defaultPrescence: DiscordPresence = {
+    data: {
+      discord_status: "offline",
+      discord_user: {
+        id: "",
+        username: "dragsbruh",
+        display_name: "Furina De Fontaine!!!",
+        avatar: "https://furina.is-a.dev/avatar.jpg",
+        primary_guild: null,
+        avatar_decoration_data: null,
+      },
+      activities: [],
+      listening_to_spotify: false,
+      spotify: null,
+    }
+  };
 
-  presence.subscribe((p) => (currentPresence = p));
+  let currentPresence: DiscordPresence  = $state(defaultPrescence);
+
+  presence.subscribe((p) => (currentPresence = p ?? defaultPrescence));
 
   onMount(() => {
     updatePresence().then(() => setInterval(updatePresence, 1000 * 10));
   });
 </script>
 
-{#if currentPresence}
   <div
     class="border border-lines bg-surface-alt h-max rounded-xl hover:scale-105 transition-all"
   >
@@ -229,6 +245,3 @@
       </div>
     </div>
   </div>
-{:else}
-  <div class="p-4">loading...</div>
-{/if}
