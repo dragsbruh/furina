@@ -8,7 +8,7 @@ const links: { href: string; title: string }[] = [
 ---
 
 <div
-  class="flex flex-col gap-4 md:flex-row justify-between px-8 py-4 select-none"
+  class="flex flex-col gap-2 md:flex-row justify-between px-8 py-4 select-none"
 >
   <a
     href="/"
@@ -22,7 +22,7 @@ const links: { href: string; title: string }[] = [
         <a
           href={link.href}
           target={link.href.startsWith("http") ? "_blank" : "_self"}
-          class="rounded-xl text-xl hover:bg-accent hover:text-surface px-4 py-2 hover:underline hover:scale-105 transition-all"
+          class="rounded-xl text-xl hover:bg-accent hover:text-surface p-2 hover:underline hover:scale-105 transition-all"
         >
           {link.title}
         </a>

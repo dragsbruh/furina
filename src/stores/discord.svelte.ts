@@ -111,8 +111,13 @@ export const lanyardSchema = z.object({
               }
             : undefined,
         }))
-    ),
-    // .transform((a) => a.filter((v) => v.name !== "music")), // filter out mpd-discord-rpc
+    ).transform((a) => a.map((v) => {
+      if (v.name !== "music") return v;
+      v.name = v.details ?? "Unknown Track";
+      v.details = v.state ?? "Unknown Artist";
+      v.state = "Music Player Daemon";
+      return v;
+    })),
     discord_status: z.enum(["dnd", "offline", "online", "idle"]),
     listening_to_spotify: z.boolean(),
 

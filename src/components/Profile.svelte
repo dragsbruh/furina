@@ -149,12 +149,12 @@
           <p>
             homelab:
             <a
-              href="https://miku.is-a.dev"
+              href="https://hearth.is-a.dev"
               class="text-accent hover:border-accent border-b border-transparent border-dashed w-max"
-              >https://miku.is-a.dev</a
+              >https://hearth.is-a.dev</a
             >
           </p>
-          <p>i use arch, btw 󠅦󠺩​󠆂󠍔​󠿏󠬄󠴀󠱃󠁑</p>
+          <p>i use arch, btw</p>
         </div>
       </div>
 

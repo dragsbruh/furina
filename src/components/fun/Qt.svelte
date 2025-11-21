@@ -7,7 +7,7 @@
 </script>
 
 {#if qt}
-  <div class="fixed right-0 bottom-0">
+  <div class="fixed right-0 bottom-0 hidden sm:block">
     <img
       alt="furina"
       src="https://catbox.moe/pictures/qts/{qt}"

@@ -11,15 +11,15 @@
 }
 
 @theme {
-  --color-surface: #0b0f1a; /* main background: deep abyssal blue */
-  --color-surface-alt: #111827; /* alt background: dark, with hint of depth */
+  --color-surface: #11111b;
+  --color-surface-alt: #181825; /* alt background: darker */
 
-  --color-typo: #dbeafe; /* primary text: soft airy blue */
-  --color-typo-muted: #7aa2f7; /* muted: washed periwinkle */
-  --color-lines: #1e293b; /* borders/dividers: slate-ish blue */
+  --color-typo: #cdd6f4; /* primary text */
+  --color-typo-muted: #b4befe; /* muted text */
+  --color-lines: #313244; /* borders/dividers */
 
-  --color-accent: #89b4fa; /* accent: pastel ocean blue */
-  --color-accent-alt: #74c7ec; /* alt accent: Fontaine sparkle */
+  --color-accent: #cba6f7;
+  --color-accent-alt: #eba0ac;
 
   --font-writer: "iAWriterQuattro", sans-serif;
 }
