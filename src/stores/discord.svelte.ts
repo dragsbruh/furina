@@ -69,55 +69,59 @@ export const lanyardSchema = z.object({
               BigInt(u.id) % 5n
             )}.png`,
       })),
-    activities: z.array(
-      z
-        .object({
-          id: z.string(),
-          name: z.string(),
-          type: z.number(),
-          state: z.string().optional(),
-          session_id: z.string().optional(),
-          details: z.string().optional(),
-          created_at: z.coerce.date().optional(),
-          timestamps: z
-            .object({
-              start: z.coerce.date().optional(),
-            })
-            .optional(),
-          assets: z
-            .object({
-              large_image: z.string().optional(),
-              large_text: z.string().optional(),
-              small_image: z.string().optional(),
-              small_text: z.string().optional(),
-            })
-            .optional(),
-          application_id: z.string().optional(),
+    activities: z
+      .array(
+        z
+          .object({
+            id: z.string(),
+            name: z.string(),
+            type: z.number(),
+            state: z.string().optional(),
+            session_id: z.string().optional(),
+            details: z.string().optional(),
+            created_at: z.coerce.date().optional(),
+            timestamps: z
+              .object({
+                start: z.coerce.date().optional(),
+              })
+              .optional(),
+            assets: z
+              .object({
+                large_image: z.string().optional(),
+                large_text: z.string().optional(),
+                small_image: z.string().optional(),
+                small_text: z.string().optional(),
+              })
+              .optional(),
+            application_id: z.string().optional(),
+          })
+          .transform((o) => ({
+            ...o,
+            assets: o.assets
+              ? {
+                  ...o.assets,
+                  large_image_url:
+                    (o.application_id || o.id.startsWith("spotify")) &&
+                    o.assets?.large_image
+                      ? parseDiscordImage(o.assets.large_image, o)
+                      : undefined,
+                  small_image_url:
+                    o.application_id && o.assets?.small_image
+                      ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
+                      : undefined,
+                }
+              : undefined,
+          }))
+      )
+      .transform((a) =>
+        a.map((v) => {
+          if (v.name !== "music") return v;
+          v.name = v.details ?? "Unknown Track";
+          v.details = v.state ?? "Unknown Artist";
+          v.state = "";
+          return v;
         })
-        .transform((o) => ({
-          ...o,
-          assets: o.assets
-            ? {
-                ...o.assets,
-                large_image_url:
-                  (o.application_id || o.id.startsWith("spotify")) &&
-                  o.assets?.large_image
-                    ? parseDiscordImage(o.assets.large_image, o)
-                    : undefined,
-                small_image_url:
-                  o.application_id && o.assets?.small_image
-                    ? `https://cdn.discordapp.com/app-assets/${o.application_id}/${o.assets.small_image}.png?size=512`
-                    : undefined,
-              }
-            : undefined,
-        }))
-    ).transform((a) => a.map((v) => {
-      if (v.name !== "music") return v;
-      v.name = v.details ?? "Unknown Track";
-      v.details = v.state ?? "Unknown Artist";
-      v.state = "Music Player Daemon";
-      return v;
-    })),
+      ),
     discord_status: z.enum(["dnd", "offline", "online", "idle"]),
     listening_to_spotify: z.boolean(),
 
