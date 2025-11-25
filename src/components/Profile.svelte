@@ -30,11 +30,12 @@
   };
 
   let currentPresence: DiscordPresence  = $state(defaultPrescence);
-
   presence.subscribe((p) => (currentPresence = p ?? defaultPrescence));
 
   onMount(() => {
-    updatePresence().then(() => setInterval(updatePresence, 1000 * 10));
+    const interval = setInterval(updatePresence, 1000 * 10);
+    updatePresence();
+    return clearInterval(interval);
   });
 </script>
 
@@ -178,20 +179,20 @@
                       <img
                         src={activity.assets.large_image_url}
                         alt=""
-                        class="w-16"
+                        class="w-16 rounded-lg"
                       />
                       {#if activity.assets.small_image_url}
                         <img
                           src={activity.assets.small_image_url}
                           alt=""
-                          class="absolute -bottom-1 -right-1 w-6"
+                          class="absolute -bottom-1 -right-1 w-6 rounded-sm"
                         />
                       {/if}
                     {:else if activity.assets.small_image_url}
                       <img
                         src={activity.assets.small_image_url}
                         alt=""
-                        class="w-16"
+                        class="w-16 rounded-lg"
                       />
                     {/if}
                   {:else}
@@ -203,7 +204,7 @@
                   {/if}
                 </div>
                 <div class="flex flex-col gap-1">
-                  <h2 class="text-sm truncate w-48">{activity.name}</h2>
+                  <h2 class="text-sm truncate w-48 font-extrabold">{activity.name}</h2>
                   <h3 class="text-xs leading-none text-muted truncate w-48">
                     {activity.details}
                   </h3>
