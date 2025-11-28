@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { render } from "astro:content";
 import { Image } from "astro:assets";
-import { SEO } from "astro-seo";
+import { undefined } from "astro:schema";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -18,32 +18,29 @@ const { Content } = await render(post);
 
 const seo = {
   title: `${post.data.title} - furina`,
-  desc: post.data.description ?? "no description available",
+  description: post.data.description ?? "no description available",
 };
 ---
 
-<head>
-  <SEO
-    charset="utf-8"
-    title={seo.title}
-    description={seo.desc}
-    openGraph={{
+<Layout
+  seo={{
+    title: seo.title,
+    description: seo.description,
+    openGraph: {
       basic: {
         title: seo.title,
-        type: "profile",
+        type: "article",
         image: post.data.hero
           ? `${Astro.site!.href}/${post.data.hero.src}`
-          : `${Astro.site!.href}/avatar.png`,
+          : "",
       },
       optional: {
-        description: seo.desc,
-        siteName: "furina",
+        description: seo.description,
+        siteName: "furina.is-a.dev",
       },
-    }}
-  />
-</head>
-
-<Layout>
+    },
+  }}
+>
   <div class="flex flex-col gap-4">
     <a
       href="/blog/"

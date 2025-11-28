@@ -67,22 +67,12 @@ const talkers: {
 ];
 ---
 
-<head>
-  <SEO
-    charset="utf-8"
-    title="furina's socials"
-    description='search for "dragsbruh" on google to find more!'
-    openGraph={{
-      basic: {
-        title: "furina's socials",
-        type: "profile",
-        image: `${Astro.site}/avatar.png`,
-      },
-    }}
-  />
-</head>
-
-<Layout>
+<Layout
+  seo={{
+    title: "dragsbruh's socials",
+    description: "for everyone to stalk",
+  }}
+>
   <div class="flex flex-col gap-8">
     <h1 class="text-2xl font-semibold text-typo mb-4">Socials</h1>
 

@@ -12,18 +12,19 @@
     "@astrojs/mdx": "4.3.9",
     "@astrojs/sitemap": "3.6.0",
     "@astrojs/svelte": "7.2.1",
-    "@tailwindcss/vite": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.17",
     "astro": "5.15.3",
+    "astro-og-canvas": "^0.7.2",
     "astro-seo": "^0.8.4",
     "fuse.js": "^7.1.0",
     "music-metadata-browser": "^2.5.11",
-    "nanostores": "^1.0.1",
-    "svelte": "^5.34.1",
-    "tailwindcss": "^4.1.10",
-    "typescript": "^5.8.3",
-    "zod": "^3.25.64"
+    "nanostores": "^1.1.0",
+    "svelte": "^5.45.2",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.19"
   }
 }

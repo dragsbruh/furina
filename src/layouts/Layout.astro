@@ -1,6 +1,34 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import Umami from "../components/Umami.astro";
 import "../styles/global.css";
+
+import { type SEOProps, SEO } from "astro-seo";
+
+export interface Props {
+  seo?: SEOProps;
+}
+
+const defaultSeo: SEOProps = {
+  title: "hai :3 i'm furina (dragsbruh)",
+  charset: "utf-8",
+  description:
+    "i code and stuff and probably write stuff, heres some keywords for google, code, dev, programming, github.",
+  openGraph: {
+    basic: {
+      title: "hai :3 i'm furina (dragsbruh)",
+      image: `${Astro.site}/avatar.png`,
+      type: "profile",
+    },
+  },
+};
+
+const props: Props = {
+  ...Astro.props,
+  seo: { ...defaultSeo, ...(Astro.props.seo ?? {}) },
+};
+
+const { seo } = props;
 ---
 
 <html lang="en">
@@ -9,10 +37,9 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <script
-      defer
-      src="https://tracking.hearth.is-a.dev/script.js"
-      data-website-id="2037ba18-ad55-4fd6-a10a-8a87cba4e94b"></script>
+    <Umami />
+
+    <SEO {...seo} />
   </head>
   <body>
     <div class="w-full h-full flex justify-center">

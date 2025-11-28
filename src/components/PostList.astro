@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 
 const blogs = (await getCollection("blog"))
@@ -17,75 +16,71 @@ interface Props {
 const { filter, description, title, placeholder } = Astro.props as Props;
 ---
 
-<Layout>
-  <div class="flex flex-col gap-8">
-    <div class="flex flex-col gap-2">
-      <h1 class="text-2xl font-bold">{title}</h1>
-      <p class="text-md">{description}</p>
+<div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-2">
+    <h1 class="text-2xl font-bold">{title}</h1>
+    <p class="text-md">{description}</p>
 
-      <input
-        type="text"
-        id="search"
-        placeholder={placeholder}
-        class="mt-4 p-4 w-full border border-lines rounded-xl hover:scale-[102%] focus:scale-[101%] hover:bg-surface-alt focus:bg-surface transition-all"
-      />
-    </div>
+    <input
+      type="text"
+      id="search"
+      placeholder={placeholder}
+      class="mt-4 p-4 w-full border border-lines rounded-xl hover:scale-[102%] focus:scale-[101%] hover:bg-surface-alt focus:bg-surface transition-all"
+    />
+  </div>
 
-    <div class="flex flex-col gap-4" id="post-list">
-      {
-        blogs
-          .filter((blog) => (filter ? filter(blog) : true))
-          .map((blog) => (
-            <a
-              class="w-full group hover:scale-[101%] transition-all"
-              id="post-item"
-              data-meta={JSON.stringify({
-                title: blog.title,
-                description: blog.description,
-                tags: blog.tags,
-                slug: blog.slug,
-              })}
-              data-slug={blog.slug}
-              href={`/blog/${blog.slug}`}
+  <div class="flex flex-col gap-4" id="post-list">
+    {
+      blogs
+        .filter((blog) => (filter ? filter(blog) : true))
+        .map((blog) => (
+          <a
+            class="w-full group hover:scale-[101%] transition-all border border-lines rounded-2xl"
+            id="post-item"
+            data-meta={JSON.stringify({
+              title: blog.title,
+              description: blog.description,
+              tags: blog.tags,
+              slug: blog.slug,
+            })}
+            data-slug={blog.slug}
+            href={`/blog/${blog.slug}`}
+          >
+            {blog.hero ? (
+              <Image
+                src={blog.hero}
+                alt=""
+                class={`w-full rounded-t-2xl max-h-72 object-cover ${blog.hero_position ?? ""}`}
+              />
+            ) : (
+              ""
+            )}
+
+            <div
+              class={`px-8 py-4 ${blog.hero ? "rounded-b-2xl" : "rounded-2xl"} group-hover:bg-surface-alt border-t border-lines  hover:border-transparent`}
             >
-              {blog.hero ? (
-                <Image
-                  src={blog.hero}
-                  alt=""
-                  class={`w-full rounded-t-2xl max-h-72 object-cover ${blog.hero_position ?? ""}`}
-                />
+              <p class="text-sm">
+                {blog.date.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              <h1 class="text-accent text-2xl font-bold prose prose-invert max-w-none">
+                {blog.title}
+              </h1>
+
+              {blog.description ? (
+                <p class="prose prose-invert max-w-none">{blog.description}</p>
               ) : (
                 ""
               )}
-
-              <div
-                class={`px-8 py-4 ${blog.hero ? "rounded-b-2xl" : "rounded-2xl"} group-hover:bg-surface-alt border border-lines hover:border-transparent`}
-              >
-                <p class="text-sm">
-                  {blog.date.toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-                <h1 class="text-accent text-2xl font-bold prose prose-invert max-w-none">
-                  {blog.title}
-                </h1>
-
-                {blog.description ? (
-                  <p class="prose prose-invert max-w-none">
-                    {blog.description}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
-            </a>
-          ))
-      }
-    </div>
+            </div>
+          </a>
+        ))
+    }
   </div>
-</Layout>
+</div>
 
 <script>
   import Fuse from "fuse.js";
