@@ -83,6 +83,7 @@ export const lanyardSchema = z.object({
             timestamps: z
               .object({
                 start: z.coerce.date().optional(),
+                end: z.coerce.date().optional(),
               })
               .optional(),
             assets: z
