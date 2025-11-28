@@ -3,8 +3,6 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { render } from "astro:content";
 import { Image } from "astro:assets";
-import { undefined } from "astro:schema";
-import { imageConfig } from "astro:assets";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -22,7 +20,7 @@ const seo = {
   description: post.data.description ?? "no description available",
   image: post.data.hero
     ? `${Astro.site!.href}/${post.data.hero.src}`
-    : `${Astro.site!.href}/opengraph/${post.data.slug}.jpeg`,
+    : `${Astro.site!.href}/opengraph/${post.data.slug}.png`,
 };
 ---
 

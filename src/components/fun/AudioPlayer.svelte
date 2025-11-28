@@ -42,7 +42,7 @@
     alt="Cover"
     class="w-24 aspect-square object-cover m-0 rounded-l-2xl"
   />
-  <div class="flex flex-col justify-evenly flex-grow mx-4">
+  <div class="flex flex-col justify-evenly grow mx-4">
     <div class="flex-col flex gap-2">
       <h1 class="text-lg">La Vaguelette</h1>
       <h2 class="text-sm leading-0 text-typo-muted">HOYO-MiX</h2>
@@ -60,7 +60,7 @@
       </button>
       <input
         type="range"
-        class="w-full flex-grow cursor-pointer"
+        class="w-full grow cursor-pointer"
         max={duration}
         min={0}
         value={currentTime}
