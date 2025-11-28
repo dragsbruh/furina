@@ -6,36 +6,34 @@
     getStatusColor,
     presence,
     pronouns,
-    updatePresence,
+    beginUpdating,
     type DiscordPresence,
   } from "../stores/discord.svelte";
   import Timerender from "./mini/Timerender.svelte";
   import { onMount } from "svelte";
 
   const defaultPrescence: DiscordPresence = {
-    data: {
-      discord_status: "offline",
-      discord_user: {
-        id: "",
-        username: "dragsbruh",
-        display_name: "Furina De Fontaine!!!",
-        avatar: "https://furina.is-a.dev/avatar.jpg",
-        primary_guild: null,
-        avatar_decoration_data: null,
-      },
-      activities: [],
-      listening_to_spotify: false,
-      spotify: null,
+    discord_status: "offline",
+    discord_user: {
+      id: "",
+      username: "dragsbruh",
+      display_name: "Furina De Fontaine!!!",
+      avatar: "https://furina.is-a.dev/avatar.jpg",
+      primary_guild: null,
+      avatar_decoration_data: null,
     },
+    activities: [],
+    listening_to_spotify: false,
+    spotify: null,
   };
 
   let currentPresence: DiscordPresence = $state(defaultPrescence);
   presence.subscribe((p) => (currentPresence = p ?? defaultPrescence));
 
   onMount(() => {
-    updatePresence();
-    const interval = setInterval(updatePresence, 1000 * 10);
-    return () => clearInterval(interval);
+    const controller = new AbortController();
+    beginUpdating(controller.signal);
+    return () => controller.abort();
   });
 </script>
 
@@ -51,13 +49,13 @@
         class="ml-4 relative w-24 aspect-square flex justify-center items-center hover:scale-105 transition-transform cursor-pointer"
       >
         <img
-          src={currentPresence.data.discord_user.avatar}
+          src={currentPresence.discord_user.avatar}
           alt=""
           class="h-20 rounded-full"
         />
-        {#if currentPresence.data.discord_user.avatar_decoration_data}
+        {#if currentPresence.discord_user.avatar_decoration_data}
           <img
-            src={currentPresence.data.discord_user.avatar_decoration_data.image}
+            src={currentPresence.discord_user.avatar_decoration_data.image}
             alt=""
             class="absolute top-0 left-0 w-24"
           />
@@ -67,12 +65,12 @@
         <div class="relative flex size-2">
           <span
             class="absolute inline-flex h-full w-full animate-ping {getStatusColor(
-              currentPresence.data.discord_status
+              currentPresence.discord_status
             )} opacity-75"
           ></span>
           <span
             class="relative inline-flex h-full w-full {getStatusColor(
-              currentPresence.data.discord_status
+              currentPresence.discord_status
             )}"
           ></span>
         </div>
@@ -84,12 +82,12 @@
       <div class="flex flex-col">
         <h2 class="text-lg font-bold leading-tight">
           <a href={discordServer} class="hover:underline">
-            {currentPresence.data.discord_user.display_name}
+            {currentPresence.discord_user.display_name}
           </a>
         </h2>
         <p class="text-sm text-muted leading-none flex items-center gap-2">
           <a href={discordServer} class="hover:underline">
-            {currentPresence.data.discord_user.username}
+            {currentPresence.discord_user.username}
           </a>
           <span class="w-1 h-1 bg-muted inline-block"></span>
           {pronouns}
@@ -97,17 +95,17 @@
       </div>
 
       <div class="flex gap-1 select-none">
-        {#if currentPresence.data.discord_user.primary_guild}
+        {#if currentPresence.discord_user.primary_guild}
           <div
             class="flex gap-1 items-center bg-surface-alt-extra w-max px-1 py-1/2"
           >
             <img
-              src={currentPresence.data.discord_user.primary_guild.image}
+              src={currentPresence.discord_user.primary_guild.image}
               alt=""
               class="h-2"
             />
             <p class=" text-xs font-bold text-muted">
-              {currentPresence.data.discord_user.primary_guild.tag}
+              {currentPresence.discord_user.primary_guild.tag}
             </p>
           </div>
         {/if}
@@ -159,7 +157,7 @@
     </div>
 
     <div class="flex flex-col gap-2">
-      {#each currentPresence.data.activities as activity}
+      {#each currentPresence.activities as activity}
         {#if activity.type != 4}
           <div
             class="flex flex-col gap-2 bg-surface rounded-xl p-4 hover:scale-[102%] transition-transform"
