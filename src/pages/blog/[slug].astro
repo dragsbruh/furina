@@ -18,9 +18,13 @@ const { Content } = await render(post);
 const seo = {
   title: `${post.data.title} - furina`,
   description: post.data.description ?? "no description available",
-  image: post.data.hero
-    ? `${Astro.site!.href}/${post.data.hero.src}`
-    : `${Astro.site!.href}/opengraph/${post.data.slug}.png`,
+  image: {
+    url: post.data.hero
+      ? `https://${Astro.site!.hostname}${post.data.hero.src}`
+      : `https://${Astro.site!.hostname}/opengraph/${post.data.slug}.png`,
+    width: post.data.hero?.width ?? 1200,
+    height: post.data.hero?.height ?? 630,
+  },
 };
 ---
 
@@ -31,13 +35,31 @@ const seo = {
     openGraph: {
       basic: {
         title: seo.title,
-        type: "article",
-        image: seo.image,
+        type: "website",
+        image: seo.image.url,
       },
       optional: {
         description: seo.description,
         siteName: "furina.is-a.dev",
       },
+      image: {
+        width: seo.image.width,
+        height: seo.image.height,
+        alt: post.data.title,
+      },
+      article: {
+        tags: post.data.tags,
+        authors: ["dragsbruh <dragsbruh@protonmail.com>"],
+        publishedTime: post.data.date.toISOString(),
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "furina.is-a.dev",
+      title: seo.title,
+      description: seo.description,
+      image: seo.image.url,
+      imageAlt: post.data.title,
     },
   }}
 >
