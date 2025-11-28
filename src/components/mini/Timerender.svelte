@@ -23,7 +23,7 @@
     return {
       start: formatTime(elapsedSeconds),
       end: duration ? formatTime(duration) : null,
-      progress: duration ? elapsedSeconds / duration : null,
+      progress: duration ? Math.min(1, elapsedSeconds / duration) : null,
     };
   });
 
