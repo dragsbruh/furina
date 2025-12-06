@@ -3,8 +3,8 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
 const blogs = (await getCollection("blog"))
-  .map((b) => b.data)
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  .map((b: any) => b.data)
+  .sort((a: any, b: any) => b.date.getTime() - a.date.getTime());
 
 interface Props {
   filter?: (blog: (typeof blogs)[number]) => boolean;
@@ -32,8 +32,8 @@ const { filter, description, title, placeholder } = Astro.props as Props;
   <div class="flex flex-col gap-4" id="post-list">
     {
       blogs
-        .filter((blog) => (filter ? filter(blog) : true))
-        .map((blog) => (
+        .filter((blog: any) => (filter ? filter(blog) : true))
+        .map((blog: any) => (
           <a
             class="w-full group hover:scale-[101%] transition-all border border-lines rounded-2xl"
             id="post-item"

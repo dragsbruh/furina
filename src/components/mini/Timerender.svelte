@@ -30,7 +30,7 @@
   onMount(() => {
     const interval = setInterval(() => {
       now = new Date();
-    }, 700);
+    }, 200);
     return () => clearInterval(interval);
   });
 </script>
