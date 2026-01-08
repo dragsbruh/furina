@@ -2,8 +2,8 @@ import { atom, type PreinitializedWritableAtom } from "nanostores";
 import { z } from "zod";
 
 export const user_id = "781445370177126401";
-export const pronouns = "regina/of/all/waters";
-export const discordServer = "https://discord.gg/BK9sBWdWC4";
+export const pronouns = "lex/sesbian";
+export const discordServer = "https://discord.gg/2DDTk9UQMz";
 
 export const badges = $state([
   {
@@ -192,7 +192,12 @@ const lanyardPresenceSchema = z.discriminatedUnion("t", [
 type LanyardInit = z.infer<typeof lanyardSocketSchema.initialize>;
 
 export const beginUpdating = async (signal: AbortSignal) => {
-  const ws = new WebSocket("wss://api.lanyard.rest/socket");
+  const isExperimental = localStorage.getItem("exp") != null;
+  const ws = new WebSocket(
+    isExperimental
+      ? "wss://hearth.is-a.dev/api/lanyard/socket"
+      : "wss://api.lanyard.rest/socket"
+  );
   signal.addEventListener("abort", () => ws.close());
 
   const heartbeatTime = await new Promise<number>((resolve, reject) => {
