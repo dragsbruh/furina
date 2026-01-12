@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div style="width: 100%;">
+	<h3>
+		{% block title %}
+	  {% endblock %}
+	</h3>
+
+	<article class="md">
+		{% block desc %}
+	  {% endblock %}
+	</article>
+
+  {% block listing %}
+  {% endblock %}
+</div>
+
+{% endblock %}

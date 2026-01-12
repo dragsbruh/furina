@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ufufurina</title>
+
+  <style>
+
+  :root {
+    --link-color: {{config.extra.accent_hex}};
+    --background-color: #101016;
+    --text-muted: #666699;
+    --text-color: #DDDDEF;
+  }
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/lb-regular.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'Libre Baskerville';
+    font-style: italic;
+    font-weight: 400;
+    src: url('/fonts/lb-italic.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/fonts/lb-700.woff2') format('woff2');
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100%;
+
+    background-color: var(--background-color);
+    color: var(--text-color);
+    
+    font-family: "Libre Baskerville", serif;
+    font-size: 16px;
+    line-height: 1.832;
+  }
+
+  a:not(.nostyle) {
+    padding: 2px 1px;
+
+    color: var(--link-color);
+    text-decoration: none;
+  }
+
+  a:hover:not(.nostyle) {
+    color: var(--background-color);
+    background-color: var(--link-color);
+  }
+
+  blockquote {
+    border-left: 4px solid var(--link-color);
+    padding-left: 8px;
+    font-style: italic;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .md :is(h1, h2, h3, h4, h5, h6, blockquote, ol, ul, br) {
+    width: 100%;
+    display: block;
+    margin: 0.75rem 0;
+  }
+
+  .md table {
+    border-collapse: collapse; 
+    width: 100%; 
+  }
+
+  .md th, .md td, pre {
+    border: 1px dashed var(--text-muted);
+    padding: 6px 10px; 
+  }
+
+  .md th {
+    font-weight: bold;
+    text-align: left; 
+  }
+  
+  .md :is(ul, ol) {
+    padding: 0 1rem;
+  }
+
+  </style>
+
+  <script defer
+    src="https://analytics.hearth.is-a.dev/script.js"
+    data-website-id="519a9532-1ae3-424e-b6dd-97a137fbe549">
+  </script>
+
+  {% block head %}
+  {% endblock head %}
+</head>
+
+<body style="display: flex; justify-content: center;">
+  <div style="max-width: 768px; width: 100%; margin: 24px 0; padding: 12px;">
+    {% include "partials/navbar.html"  %}
+    
+    <section class="content" style="margin: 24px 0;">
+      {% block content %}
+      {% endblock content %}
+    </section>
+
+    {% include "partials/footer.html"  %}
+  </div>
+</body>
+
+</html>

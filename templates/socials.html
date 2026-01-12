@@ -1,0 +1,26 @@
+{% extends "_listing.html" %}
+
+{% import "_macros.html" as macros %}
+
+{% block head %}
+{{ macros::opengraph(title="socials", description="for stalkers and sesbians", url="/socials/") }}
+{% endblock %}
+
+{% block title %}
+	{{ section.title }}
+{% endblock %}
+
+{% block desc %}
+	{{ section.content | safe }}
+{% endblock %}
+
+{% block listing %}
+<ul>
+	{% for social in config.extra.socials %}
+		<li>
+			<a target="_blank" href="{{ social.url }}">({{ social.name }})  {{ social.handle }}</a>
+		</li>
+	{% endfor %}
+</ul>
+{% endblock listing %}
+

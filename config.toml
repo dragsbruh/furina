@@ -1,0 +1,115 @@
+base_url = "https://furina.is-a.dev"
+
+compile_sass = false
+build_search_index = false # TODO
+
+generate_sitemap = true
+minify_html = true
+
+[markdown]
+render_emoji = true
+insert_anchor_links = "heading"
+
+[markdown.highlighting]
+theme = "ayu-dark"
+style = "inline"
+
+[extra]
+accent_hex = "#3399FF"
+twitter_creator = "legendragswt"
+
+nav = [
+  { name = "home", url = "/" },
+  { name = "blog", url = "/blog/" },
+  { name = "yaps", url = "/yaps/" },
+  { name = "socials", url = "/socials/" },
+  { name = "github", url = "https://github.com/dragsbruh" },
+  { name = "email", url = "mailto:dragsbruh@protonmail.com" },
+]
+
+friends = [
+  { name = "orangc", url = "https://orangc.net" },
+  { name = "pbl", url = "https://pbl.is-a.dev" },
+  { name = "iostpa", url = "https://iostpa.com" },
+  { name = "shiroi neko", url = "https://shiroinekotfs.github.io" },
+  { name = "nora", url = "https://nora.stabbed.me" },
+  { name = "thusuzzee", url = "https://z1.gg" },
+  { name = "ajr", url = "https://github.com/ajr-dev" },
+  { name = "anw", url = "https://anw.is-a.dev" },
+]
+
+[[extra.highlighted_projects]]
+name = "fonta"
+desc = "mesh vpn control plane (similar to tailscale)"
+repo = "https://git.hearth.is-a.dev/dragsbruh/fonta"
+
+[[extra.highlighted_projects]]
+name = "lexyc"
+desc = "compiler for a tiny programming language"
+repo = "https://github.com/dragsbruh/lexyc"
+
+[[extra.highlighted_projects]]
+name = "uwa"
+desc = "tiny unfinished assembler"
+repo = "https://github.com/dragsbruh/uwa"
+
+[[extra.highlighted_projects]]
+name = "grall"
+desc = "byte-byte markov chain runtime"
+repo = "https://github.com/dragsbruh/grall"
+
+[[extra.socials]]
+name = "github"
+handle = "dragsbruh"
+url = "https://github.com/dragsbruh"
+
+[[extra.socials]]
+name = "codeberg"
+handle = "dragsbruh"
+url = "https://codeberg.org/dragsbruh"
+
+[[extra.socials]]
+name = "bluesky"
+handle = "furina.is-a.dev"
+url = "https://bsky.app/profile/furina.is-a.dev"
+
+[[extra.socials]]
+name = "discord"
+handle = "dragsbruh"
+url = "https://discord.com/users/781445370177126401"
+
+[[extra.socials]]
+name = "discord server"
+handle = "palais mermonia"
+url = "https://discord.gg/BK9sBWdWC4"
+
+[[extra.socials]]
+name = "instagram"
+handle = "dragsbruh"
+url = "https://instagram.com/dragsbruh"
+
+[[extra.socials]]
+name = "reddit"
+handle = "legendrags"
+url = "https://reddit.com/user/LegenDrags"
+
+[[extra.socials]]
+name = "last.fm"
+handle = "dragsbruh"
+url = "https://last.fm/user/dragsbruh"
+
+[[extra.socials]]
+name = "email"
+handle = "dragsbruh@protonmail.com"
+url = "mailto:dragsbruh@protonmail.com"
+
+[[extra.socials]]
+name = "matrix (temp)"
+handle = "@dragsbruh:matrix.org"
+url = "https://matrix.to/#/@dragsbruh:matrix.org"
+
+[[extra.socials]]
+name = "steam"
+handle = "dragsbruh"
+url = "https://steamcommunity.com/id/dragsbruh/"
+

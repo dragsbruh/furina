@@ -1,0 +1,40 @@
+{% macro opengraph(title, description, type="website", url="/", image="/face.jpg", page="") %}
+    {% set base = config.base_url | trim_end_matches(pat="/") %}
+  {% if image is starting_with("/") %}
+    {% set image = base ~ image %}
+  {% endif %}
+  {% if url is starting_with("/") %}
+    {% set url = base ~ url %}
+  {% endif %}
+  {% if page != "" %}
+    {% set url = page.permalink %}
+  {% endif %}
+  
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  
+  <meta name="theme-color" content="{{ config.extra.accent_hex }}">
+  
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:type" content="{{ type }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ url }}">
+  <meta property="og:site_name" content="{{ title }}">
+  <meta property="og:image" content="{{ image }}">
+
+  {% if type == "article" %}
+  <meta property="article:published_time" content="{{ page.date }}">
+  <meta property="article:author" content="dragsbruh">
+  {% endif %}
+
+  {% if image != "/face.jpg" and type == "article" %}
+  <meta name="twitter:card" content="summary_large_image">
+  {% else %}
+  <meta name="twitter:card" content="summary">
+  {% endif %}
+
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:image" content="{{ image }}">
+  <meta name="twitter:creator" content="{{ config.extra.twitter_creator }}">
+{% endmacro %}

@@ -1,0 +1,6 @@
+<h2>ufufurina</h2>
+<nav style="display: flex; gap: 4px;">
+  {% for item in config.extra.nav %}
+    <a href="{{ item.url }}">{{ item.name }}</a>
+  {% endfor %}
+</nav>
